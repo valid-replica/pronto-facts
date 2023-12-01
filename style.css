@@ -25,6 +25,10 @@ body {
   background-color: #fafafa;
 }
 
+.hidden {
+  display: none !important;
+}
+
 header {
   color: #050505;
   display: flex;
@@ -67,7 +71,7 @@ h1 {
   transform: translateY(2px);
 }
 
-form {
+.fact-form {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -111,7 +115,7 @@ main {
   color: #f8fafc;
   background-color: #0f172a;
   padding: 8px 16px;
-  height: 84vh;
+  max-height: 84vh;
   display: flex;
   flex-direction: column;
 }
