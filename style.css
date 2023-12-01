@@ -11,7 +11,7 @@ ul {
 
 button:hover {
   transform: scale(110%);
-  transition: 0.2s;
+  transition: 0.1s;
   cursor: pointer;
 }
 
@@ -20,6 +20,8 @@ button:hover {
 }
 
 body {
+  display: flex;
+  flex-direction: column;
   background-color: #fafafa;
 }
 
@@ -58,7 +60,11 @@ h1 {
 }
 
 .add-btn:hover {
-  transform: scale(105%);
+  transform: none;
+}
+
+.add-btn:active {
+  transform: translateY(2px);
 }
 
 form {
@@ -66,7 +72,7 @@ form {
   justify-content: center;
   align-items: center;
   background-color: #475569;
-  padding: 16px 32px;
+  padding: 24px 32px;
   gap: 8px;
 }
 
@@ -105,8 +111,7 @@ main {
   color: #f8fafc;
   background-color: #0f172a;
   padding: 8px 16px;
-  height: 856px;
-
+  height: 84vh;
   display: flex;
   flex-direction: column;
 }
@@ -141,7 +146,7 @@ main {
 
 .fact {
   display: flex;
-  gap: 24px;
+  gap: 32px;
 
   background-color: #1e293b;
   font-family: "Poppins", sans-serif;
@@ -193,18 +198,89 @@ a:active {
 
 .like-btn:hover {
   transform: translateY(-4px);
-  transition: 0.3s;
+  transition: 0.2s;
   box-shadow: 0px 6px #f97316;
 }
 
 .dislike-btn:hover {
   transform: translateY(4px);
-  transition: 0.3s;
+  transition: 0.2s;
   box-shadow: 0px -6px #6366f1;
 }
 
 .share-btn:hover {
   transform: translateX(4px);
-  transition: 0.3s;
+  transition: 0.2s;
   box-shadow: -6px 0px #64748b;
+}
+
+@media (max-width: 900px) {
+  h1 {
+    font-size: 32px;
+  }
+  .check-icon {
+    font-size: 24px;
+  }
+  .add-icon {
+    font-size: 24px;
+  }
+  .add-btn {
+    padding: 6px 6px;
+  }
+  form {
+    flex-wrap: wrap;
+    padding: 8px 16px;
+    gap: 10px;
+  }
+  form input,
+  form select {
+    font-size: 10px;
+    padding: 4px 10px;
+  }
+  form span {
+    font-size: 10px;
+  }
+  .post-btn {
+    font-size: 12px;
+    padding: 4px 10px;
+  }
+  .category-buttons {
+    gap: 8px;
+    margin: 12px 0;
+  }
+  .category-buttons button {
+    padding: 2px 6px;
+    border-radius: 32px;
+    font-size: 12px;
+    width: 96px;
+  }
+  #all-category-btn {
+    font-size: 16px;
+  }
+  .fact {
+    gap: 14px;
+    font-size: 12px;
+    line-height: 1.4;
+    margin-bottom: 12px;
+    padding: 12px 18px;
+    border-radius: 8px;
+  }
+  .tag {
+    font-size: 12px;
+    padding: 2px 6px;
+  }
+
+  .fact-buttons button {
+    font-size: 12px;
+    padding: 4px 4px;
+    gap: 4px;
+    border-radius: 32px;
+    width: 60px;
+  }
+}
+
+@media (max-width: 700px) {
+  .fact {
+    flex-direction: column;
+  }
 }
