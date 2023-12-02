@@ -19,6 +19,23 @@ button:hover {
   font-variation-settings: "FILL" 1, "wght" 100, "GRAD" 0, "opsz" 24;
 }
 
+::-webkit-scrollbar {
+  width: 24px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f172a;
+  margin-block: 24px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #f97316;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c2410c;
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -118,6 +135,8 @@ main {
   max-height: 84vh;
   display: flex;
   flex-direction: column;
+  overflow: scroll;
+  overflow-x: hidden;
 }
 
 .category-buttons {
@@ -218,7 +237,19 @@ a:active {
   box-shadow: -6px 0px #64748b;
 }
 
+footer {
+  text-align: center;
+}
+
 @media (max-width: 900px) {
+  ::-webkit-scrollbar {
+    width: 18px;
+  }
+
+  ::-webkit-scrollbar-track {
+    margin-block: 18px;
+  }
+
   h1 {
     font-size: 32px;
   }
