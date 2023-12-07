@@ -234,6 +234,10 @@ a:active {
   width: 80px;
 }
 
+.fact-buttons button:disabled {
+  background-color: #e2e8f0;
+}
+
 .like-btn:hover {
   transform: translateY(-4px);
   transition: 0.2s;

@@ -41,7 +41,11 @@ function App() {
 
       <main>
         <CategoryFilter setCurrentCategory={setCurrentCategory} />
-        {isLoading ? <Loader /> : <FactList facts={facts} />}
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <FactList facts={facts} setFacts={setFacts} />
+        )}
       </main>
     </>
   );
@@ -189,7 +193,7 @@ function CategoryFilter({ setCurrentCategory }) {
   );
 }
 
-function FactList({ facts }) {
+function FactList({ facts, setFacts }) {
   if (facts.length === 0) {
     return (
       <p className="message">
@@ -202,7 +206,7 @@ function FactList({ facts }) {
     <section>
       <ul className="fact-list">
         {facts.map((fact) => (
-          <Fact key={fact.id} fact={fact} />
+          <Fact key={fact.id} fact={fact} setFacts={setFacts} />
         ))}
       </ul>
       <p>
@@ -212,8 +216,29 @@ function FactList({ facts }) {
   );
 }
 
-function Fact({ fact }) {
-  function handleVote() {}
+function Fact({ fact, setFacts }) {
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  async function handleVote(columnName) {
+    setIsUpdating(true);
+    const { data: updatedFact, error } = await supabase
+      .from("facts")
+      .update({ [columnName]: fact[columnName] + 1 })
+      .eq("id", fact.id)
+      .select();
+
+    setIsUpdating(false);
+
+    if (!error)
+      setFacts((facts) =>
+        facts.map((f) => (f.id === fact.id ? updatedFact[0] : f))
+      );
+  }
+
+  function shareButton() {
+    navigator.clipboard.writeText(`Fact: ${fact.text}\nSource: ${fact.source}`);
+    alert("Copied to clipboard");
+  }
 
   return (
     <li className="fact">
@@ -234,15 +259,23 @@ function Fact({ fact }) {
         </span>
       </p>
       <div className="fact-buttons">
-        <button className="like-btn" onClick={handleVote}>
+        <button
+          className="like-btn"
+          onClick={() => handleVote("likes")}
+          disabled={isUpdating}
+        >
           <span className="material-symbols-sharp"> thumb_up </span>{" "}
           {fact.likes}
         </button>
-        <button className="dislike-btn" onClick={handleVote}>
+        <button
+          className="dislike-btn"
+          onClick={() => handleVote("dislikes")}
+          disabled={isUpdating}
+        >
           <span className="material-symbols-sharp"> thumb_down </span>{" "}
           {fact.dislikes}
         </button>
-        <button className="share-btn">
+        <button className="share-btn" onClick={shareButton}>
           <span className="material-symbols-sharp"> share </span>
         </button>
       </div>
