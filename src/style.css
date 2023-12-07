@@ -163,6 +163,12 @@ main {
   width: 64px;
 }
 
+.message {
+  text-align: center;
+  font-size: 24px;
+  margin-top: 32px;
+}
+
 .fact-list {
   display: flex;
   flex-direction: column;
