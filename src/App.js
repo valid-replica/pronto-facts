@@ -94,23 +94,23 @@ function NewFactForm({ setFacts, setShowForm }) {
   const [text, setText] = useState("");
   const [source, setSource] = useState("http://example.com");
   const [category, setCategory] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
   const textLength = text.length;
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     if (text && isValidHttpUrl(source) && category && textLength <= 200) {
-      // const newFact = {
-      //   id: Math.round(Math.random() * 100000),
-      //   text,
-      //   source,
-      //   category,
-      //   likes: 0,
-      //   dislikes: 0,
-      //   createdIn: new Date().getFullYear(),
-      // };
+      setIsUploading(true);
 
-      setFacts((facts) => [newFact, ...facts]);
+      const { data: newFact, error } = await supabase
+        .from("facts")
+        .insert([{ text, source, category }])
+        .select();
+
+      setIsUploading(false);
+
+      if (!error) setFacts((facts) => [newFact[0], ...facts]);
 
       setText("");
       setSource("");
@@ -129,6 +129,7 @@ function NewFactForm({ setFacts, setShowForm }) {
         placeholder="Share a fact"
         value={text}
         onChange={(e) => setText(e.target.value)}
+        disabled={isUploading}
       />
       <span>{200 - textLength}</span>
       <input
@@ -136,8 +137,13 @@ function NewFactForm({ setFacts, setShowForm }) {
         placeholder="Source"
         value={source}
         onChange={(e) => setSource(e.target.value)}
+        disabled={isUploading}
       />
-      <select value={category} onChange={(e) => setCategory(e.target.value)}>
+      <select
+        value={category}
+        onChange={(e) => setCategory(e.target.value)}
+        disabled={isUploading}
+      >
         <option value="" disabled selected>
           Category
         </option>
@@ -147,7 +153,9 @@ function NewFactForm({ setFacts, setShowForm }) {
           </option>
         ))}
       </select>
-      <button className="post-btn">Post!</button>
+      <button className="post-btn" disabled={isUploading}>
+        Post!
+      </button>
     </form>
   );
 }
@@ -205,6 +213,8 @@ function FactList({ facts }) {
 }
 
 function Fact({ fact }) {
+  function handleVote() {}
+
   return (
     <li className="fact">
       <p>
@@ -224,11 +234,11 @@ function Fact({ fact }) {
         </span>
       </p>
       <div className="fact-buttons">
-        <button className="like-btn">
+        <button className="like-btn" onClick={handleVote}>
           <span className="material-symbols-sharp"> thumb_up </span>{" "}
           {fact.likes}
         </button>
-        <button className="dislike-btn">
+        <button className="dislike-btn" onClick={handleVote}>
           <span className="material-symbols-sharp"> thumb_down </span>{" "}
           {fact.dislikes}
         </button>
