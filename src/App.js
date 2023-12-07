@@ -47,6 +47,12 @@ function App() {
           <FactList facts={facts} setFacts={setFacts} />
         )}
       </main>
+      <footer>
+        Ervic Padilla | &nbsp;
+        <a href="https://github.com/valid-replica/pronto-facts" target="_blank">
+          GitHub
+        </a>
+      </footer>
     </>
   );
 }
@@ -96,7 +102,7 @@ function isValidHttpUrl(string) {
 
 function NewFactForm({ setFacts, setShowForm }) {
   const [text, setText] = useState("");
-  const [source, setSource] = useState("http://example.com");
+  const [source, setSource] = useState("");
   const [category, setCategory] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const textLength = text.length;
@@ -218,6 +224,7 @@ function FactList({ facts, setFacts }) {
 
 function Fact({ fact, setFacts }) {
   const [isUpdating, setIsUpdating] = useState(false);
+  const isDisputed = fact.likes < fact.dislikes;
 
   async function handleVote(columnName) {
     setIsUpdating(true);
@@ -243,6 +250,7 @@ function Fact({ fact, setFacts }) {
   return (
     <li className="fact">
       <p>
+        {isDisputed ? <span className="disputed">[Disputed]</span> : null}
         {fact.text}
         <a href={fact.source} target="_blank">
           [Source]

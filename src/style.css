@@ -187,6 +187,12 @@ main {
   border-radius: 8px;
 }
 
+.disputed {
+  color: #dc2626;
+  font-weight: 700;
+  margin-right: 4px;
+}
+
 .fact p {
   display: flex;
   justify-content: flex-start;
@@ -257,6 +263,7 @@ a:active {
 }
 
 footer {
+  margin-top: 6px;
   text-align: center;
 }
 
